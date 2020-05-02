@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+import 'plans.dart';
 
 void main() => runApp(
   MaterialApp(
@@ -51,10 +52,11 @@ class BalanceCard extends StatelessWidget {
   }
 }
 
-class Plan extends StatelessWidget {
+class PlanCard extends StatelessWidget {
   String title;
   double balance;
-  Plan(this.title, this.balance);
+
+  PlanCard(this.title, this.balance);
 
   @override
   Widget build(BuildContext context) {
@@ -149,18 +151,19 @@ class Plan extends StatelessWidget {
 }
 
 class PlansSection extends StatelessWidget {
-  List<dynamic> plans = [
-    {'title': 'Accomodation', 'balance': 201820.0},
-    {'title': 'Regular Savings', 'balance': 12820.0},
-    {'title': 'Chop Life', 'balance': 102324.0}
+  List<Plan> plans = [
+      Plan('Accomodation', 201820.0),
+      Plan('Regular Savings', 12820.0),
+      Plan('Chop Life', 102324.0),
   ];
 
-  void total() {
+
+  double total() {
     double sum = 0;
     plans.forEach((plan) {
-      sum += plan['balance'];
+      sum += plan.balance;
     });
-    print(sum);
+    return sum;
   }
 
   @override
@@ -180,7 +183,7 @@ class PlansSection extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 children: plans.map((plan) {
                   return Container(
-                    child: Plan(plan['title'], plan['balance']),
+                    child: PlanCard(plan.title, plan.balance),
                   );
                 }).toList()),
           ),
