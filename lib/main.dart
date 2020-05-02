@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 void main() => runApp(MaterialApp(home: Home()));
 
 class BalanceCard extends StatelessWidget {
+//  PlansSection totalBalance = new PlansSection();
+//  totalBalance.total();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,10 +48,15 @@ class BalanceCard extends StatelessWidget {
 
 class Plan extends StatelessWidget {
   String title;
-  Plan(this.title);
+  double balance;
+  Plan(this.title, this.balance);
+
 
   @override
   Widget build(BuildContext context) {
+    FlutterMoneyFormatter fmf = FlutterMoneyFormatter(amount: balance);
+    MoneyFormatterOutput fo = fmf.output;
+
     return Container(
       margin: EdgeInsets.only(left: 20, right: 10, top: 10, bottom: 10),
       width: 230.0,
@@ -84,8 +93,9 @@ class Plan extends StatelessWidget {
                           child: Text('Balance'),
                         ),
                         Container(
+
                           child: Text(
-                            '201,821',
+                            fo.withoutFractionDigits,
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
@@ -136,6 +146,14 @@ class Plan extends StatelessWidget {
 }
 
 class PlansSection extends StatelessWidget {
+  List<dynamic> plans = [ {'title': 'Accomodation', 'balance': 201820.0}, {'title': 'Regular Savings', 'balance': 12820.0}, {'title': 'Chop Life', 'balance': 102324.0}];
+
+  void total() {
+    double sum = 0;
+    plans.forEach((plan) {sum += plan['balance'];});
+    print(sum);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -151,11 +169,11 @@ class PlansSection extends StatelessWidget {
             child: ListView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Plan('Accomodation'),
-                  Plan('Regular Savings'),
-                  Plan('Regular Savings')
-                ]),
+                children: plans.map((plan) {
+                  return Container(
+                    child: Plan(plan['title'], plan['balance']),
+                  );
+                }).toList()),
           ),
         ],
       ),
@@ -225,7 +243,6 @@ class Home extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-
         backgroundColor: Colors.white,
         unselectedItemColor: Colors.grey[400],
 //        type: BottomNavigationBarType.fixed,
