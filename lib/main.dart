@@ -53,8 +53,8 @@ class BalanceCard extends StatelessWidget {
 }
 
 class PlanCard extends StatelessWidget {
-  String title;
-  double balance;
+  final String title;
+  final double balance;
 
   PlanCard(this.title, this.balance);
 
