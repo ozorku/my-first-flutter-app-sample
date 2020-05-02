@@ -4,7 +4,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
-void main() => runApp(MaterialApp(home: Home()));
+void main() => runApp(
+  MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Home(),
+  ),
+);
 
 class BalanceCard extends StatelessWidget {
 //  PlansSection totalBalance = new PlansSection();
@@ -51,7 +56,6 @@ class Plan extends StatelessWidget {
   double balance;
   Plan(this.title, this.balance);
 
-
   @override
   Widget build(BuildContext context) {
     FlutterMoneyFormatter fmf = FlutterMoneyFormatter(amount: balance);
@@ -93,7 +97,6 @@ class Plan extends StatelessWidget {
                           child: Text('Balance'),
                         ),
                         Container(
-
                           child: Text(
                             fo.withoutFractionDigits,
                             style: TextStyle(
@@ -146,11 +149,17 @@ class Plan extends StatelessWidget {
 }
 
 class PlansSection extends StatelessWidget {
-  List<dynamic> plans = [ {'title': 'Accomodation', 'balance': 201820.0}, {'title': 'Regular Savings', 'balance': 12820.0}, {'title': 'Chop Life', 'balance': 102324.0}];
+  List<dynamic> plans = [
+    {'title': 'Accomodation', 'balance': 201820.0},
+    {'title': 'Regular Savings', 'balance': 12820.0},
+    {'title': 'Chop Life', 'balance': 102324.0}
+  ];
 
   void total() {
     double sum = 0;
-    plans.forEach((plan) {sum += plan['balance'];});
+    plans.forEach((plan) {
+      sum += plan['balance'];
+    });
     print(sum);
   }
 
